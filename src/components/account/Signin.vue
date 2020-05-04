@@ -15,7 +15,7 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col class="col-sm-10">
+        <v-col class="col-sm-12">
           <v-text-field
             outlined
             :type="passwordType"
@@ -25,14 +25,16 @@
             v-model="input.password"
           ></v-text-field>
         </v-col>
-        <v-col>
-          <v-icon v-if="passwordType=='password'" @click="togglePasswordVisibility()">visibility</v-icon>
-          <v-icon v-if="passwordType=='text'" @click="togglePasswordVisibility()">visibility_off</v-icon>
-        </v-col>
       </v-row>
       <v-row>
-        <v-col class="col-sm-12">
+        <v-col class="col-sm-1" />
+        <v-col class="col-sm-4">
           <v-btn class="text-xs-center" v-on:click="login()">Login</v-btn>
+        </v-col>
+        <v-col>
+          <v-btn text @click="togglePasswordVisibility()">show/hide password</v-btn>
+
+          <!-- <v-icon v-if="passwordType=='text'" @click="togglePasswordVisibility()">visibility_off</v-icon> -->
         </v-col>
       </v-row>
       {{input.email}}
