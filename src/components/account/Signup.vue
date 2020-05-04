@@ -34,14 +34,14 @@
             prepend-icon="vpn_key"
             label="confirm Password"
             name="confirmPassword"
-            v-model="input.password"
+            v-model="input.confirmPassword"
           ></v-text-field>
         </v-col>
       </v-row>
       <v-row>
         <v-col class="col-sm-1" />
         <v-col class="col-sm-4">
-          <v-btn class="text-xs-center" v-on:click="login()">Login</v-btn>
+          <v-btn class="text-xs-center" v-on:click="register()">Register</v-btn>
         </v-col>
         <v-col>
           <v-btn text @click="togglePasswordVisibility()">show/hide password</v-btn>
@@ -54,7 +54,7 @@
 
 <script>
 export default {
-  name: "Login",
+  name: "Register",
   data() {
     return {
       input: {
@@ -77,17 +77,14 @@ export default {
         ? [true]
         : ["Invalid Email"];
     },
-    login() {
-      if (this.input.email != "" && this.input.password != "") {
-        if (
-          this.input.email == this.$parent.mockAccount.email &&
-          this.input.password == this.$parent.mockAccount.password
-        ) {
-          this.$emit("authenticated", true);
-          this.$router.replace({ name: "secure" });
-        } else {
-          alert("The email and / or password is incorrect");
-          console.log("The email and / or password is incorrect");
+    register() {
+      if (
+        this.input.email != "" &&
+        this.input.confirmEmail != "" &&
+        this.input.password != ""
+      ) {
+        if (!(this.input.email === this.input.confirmEmail)) {
+          alert("Password and confirm password should match");
         }
       } else {
         alert("A email and password must be present");
