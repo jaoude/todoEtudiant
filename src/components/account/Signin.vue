@@ -29,15 +29,16 @@
       <v-row>
         <v-col class="col-sm-1" />
         <v-col class="col-sm-4">
-          <v-btn class="text-xs-center" v-on:click="login()">Login</v-btn>
+          <v-btn
+            class="text-xs-center"
+            :disabled="isEmailValid && input.password == ''"
+            v-on:click="login()"
+          >Login</v-btn>
         </v-col>
         <v-col>
           <v-btn text @click="togglePasswordVisibility()">show/hide password</v-btn>
-
-          <!-- <v-icon v-if="passwordType=='text'" @click="togglePasswordVisibility()">visibility_off</v-icon> -->
         </v-col>
       </v-row>
-      {{input.email}}
     </v-container>
   </v-form>
 </template>
@@ -75,6 +76,12 @@ export default {
           this.$emit("authenticated", true);
           this.$router.replace({ name: "secure" });
         } else {
+          var userInfo = {
+            email: this.input.email,
+            password: this.input.password
+          };
+          this.$store.commit("applyUser", userInfo);
+          alert(this.$store.state.user);
           alert("The email and / or password is incorrect");
           console.log("The email and / or password is incorrect");
         }
