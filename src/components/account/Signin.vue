@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "Login",
   data() {
@@ -56,6 +57,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["login"]),
     togglePasswordVisibility() {
       this.passwordType =
         this.passwordType === "password" ? "text" : "password";
@@ -67,24 +69,16 @@ export default {
         ? [true]
         : ["Invalid Email"];
     },
-    login() {
+    async login() {
       if (this.input.email != "" && this.input.password != "") {
-        if (
-          this.input.email == this.$parent.mockAccount.email &&
-          this.input.password == this.$parent.mockAccount.password
-        ) {
-          this.$emit("authenticated", true);
-          this.$router.replace({ name: "secure" });
-        } else {
-          var userInfo = {
-            email: this.input.email,
-            password: this.input.password
-          };
-          this.$store.commit("applyUser", userInfo);
-          alert(this.$store.state.user);
-          alert("The email and / or password is incorrect");
-          console.log("The email and / or password is incorrect");
-        }
+        alert();
+        var payload = {
+          email: this.input.email,
+          password: this.input.password
+        };
+        await this.$store.dispatch("login", payload);
+
+        alert(this.input.email);
       } else {
         alert("A email and password must be present");
         console.log("A email and password must be present");
