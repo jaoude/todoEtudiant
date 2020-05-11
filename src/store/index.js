@@ -6,13 +6,12 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        user: {
-            email: '',
-            password: ''
-        },
+        status: '',
+        token: localStorage.getItem('token') || '',
+        user: {},
         isAuthenticated: true,
-
     },
+
     mutations: {
         applyUser(state, userInfo) {
             state.user = userInfo;
@@ -30,29 +29,30 @@ export default new Vuex.Store({
     actions: {
         async login({ commit }, payload) {
             return new Promise((resolve, reject) => {
-                axios({
-                    url: 'http://localhost:5000/api/account/login', data: payload, method: 'POST'
-                })
-                    .then(resp => {
-                        const token = resp.data.token
+                commit('auth_request'),
 
-                        localStorage.setItem('token', token)
-                        axios.defaults.headers.common['Authorization'] = token
-
-                        resolve(resp);
-                        alert('store' + token);
-                        commit('m_logInUser');
+                    axios({
+                        url: 'http://localhost:5000/api/account/login', data: payload, method: 'POST'
                     })
-                    .catch(err => {
-
-                        localStorage.removeItem('token')
-                        reject(err)
-                        alert(err)
-                    })
+                        .then(resp => {
+                            const token = resp.data.token
+                            const user = resp.data.user
+                            localStorage.setItem('token', token)
+                            axios.defaults.headers.common['Authorization'] = token
+                            commit('auth_success', token, user)
+                            resolve(resp)
+                            alert('store' + token);
+                        })
+                        .catch(err => {
+                            commit('auth_error')
+                            localStorage.removeItem('token')
+                            reject(err)
+                            alert(err)
+                        })
             })
         },
     },
-    logput: function (context) {
+    logout: function (context) {
         //your logout functionality
         context.commit('removeWebToken');
     }

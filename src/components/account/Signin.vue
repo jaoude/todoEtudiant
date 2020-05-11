@@ -10,7 +10,7 @@
             prepend-icon="email"
             label="Email"
             name="email"
-            v-model="input.email"
+            v-model="email"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -22,7 +22,7 @@
             prepend-icon="vpn_key"
             label="Password"
             name="password"
-            v-model="input.password"
+            v-model="password"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -31,7 +31,7 @@
         <v-col class="col-sm-4">
           <v-btn
             class="text-xs-center"
-            :disabled="isEmailValid && input.password == ''"
+            :disabled="isEmailValid && password == ''"
             v-on:click="login()"
           >Login</v-btn>
         </v-col>
@@ -63,25 +63,22 @@ export default {
         this.passwordType === "password" ? "text" : "password";
     },
     isEmailValid: function() {
-      return this.input.email == ""
+      return this.email == ""
         ? [true]
-        : this.$emailRegex.test(this.input.email)
+        : this.$emailRegex.test(this.email)
         ? [true]
         : ["Invalid Email"];
     },
     async login() {
-      if (this.input.email != "" && this.input.password != "") {
-        alert();
+      if (this.email != "" && this.password != "") {
         var payload = {
-          email: this.input.email,
-          password: this.input.password
+          email: this.email,
+          password: this.password
         };
         await this.$store.dispatch("login", payload);
-
-        alert(this.input.email);
       } else {
-        alert("A email and password must be present");
-        console.log("A email and password must be present");
+        alert("An email and password must be present");
+        console.log("An email and password must be present");
       }
     }
   }

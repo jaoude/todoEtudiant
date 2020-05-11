@@ -10,7 +10,7 @@
             prepend-icon="email"
             label="Email"
             name="email"
-            v-model="input.email"
+            v-model="email"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -22,7 +22,7 @@
             prepend-icon="vpn_key"
             label="Password"
             name="password"
-            v-model="input.password"
+            v-model="password"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -34,7 +34,7 @@
             prepend-icon="vpn_key"
             label="confirm Password"
             name="confirmPassword"
-            v-model="input.confirmPassword"
+            v-model="confirmPassword"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -47,7 +47,7 @@
           <v-btn text @click="togglePasswordVisibility()">show/hide password</v-btn>
         </v-col>
       </v-row>
-      {{input.email}}
+      {{email}}
     </v-container>
   </v-form>
 </template>
@@ -71,19 +71,15 @@ export default {
         this.passwordType === "password" ? "text" : "password";
     },
     isEmailValid: function() {
-      return this.input.email == ""
+      return this.email == ""
         ? [true]
-        : this.$emailRegex.test(this.input.email)
+        : this.$emailRegex.test(this.email)
         ? [true]
         : ["Invalid Email"];
     },
     register() {
-      if (
-        this.input.email != "" &&
-        this.input.confirmEmail != "" &&
-        this.input.password != ""
-      ) {
-        if (!(this.input.email === this.input.confirmEmail)) {
+      if (this.email != "" && this.confirmEmail != "" && this.password != "") {
+        if (!(this.email === this.confirmEmail)) {
           alert("Password and confirm password should match");
         }
       } else {

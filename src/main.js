@@ -10,6 +10,7 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import vuetify from './plugins/vuetify';
+import Axios from 'axios'
 
 // Add the specific imported icons
 library.add(faEnvelope);
@@ -19,7 +20,14 @@ library.add(faTwitter);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.prototype.$emailRegex = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/;
-Vue.config.productionTip = false;
+Vue.prototype.$http = Axios;
+Vue.prototype.devAddress =
+  Vue.config.productionTip = false;
+
+const token = localStorage.getItem('token')
+if (token) {
+  Vue.prototype.$http.defaults.headers.common['Authorization'] = token
+}
 
 new Vue({
   router,
