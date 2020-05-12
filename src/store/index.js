@@ -26,13 +26,14 @@ export default new Vuex.Store({
             alert(state.user);
         }
     },
+
     actions: {
         async login({ commit }, payload) {
             return new Promise((resolve, reject) => {
                 commit('auth_request'),
 
                     axios({
-                        url: 'http://localhost:5000/api/account/login', data: payload, method: 'POST'
+                        url: process.env.VUE_APP_SERVER_API + '/account/login', data: payload, method: 'POST'
                     })
                         .then(resp => {
                             const token = resp.data.token
@@ -52,6 +53,7 @@ export default new Vuex.Store({
             })
         },
     },
+
     logout: function (context) {
         //your logout functionality
         context.commit('removeWebToken');

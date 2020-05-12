@@ -10,7 +10,7 @@
             prepend-icon="email"
             label="Email"
             name="email"
-            v-model="email"
+            v-model="input.email"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -22,7 +22,7 @@
             prepend-icon="vpn_key"
             label="Password"
             name="password"
-            v-model="password"
+            v-model="input.password"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -63,19 +63,23 @@ export default {
         this.passwordType === "password" ? "text" : "password";
     },
     isEmailValid: function() {
-      return this.email == ""
+      return this.input.email == ""
         ? [true]
-        : this.$emailRegex.test(this.email)
+        : this.$emailRegex.test(this.input.email)
         ? [true]
         : ["Invalid Email"];
     },
     async login() {
-      if (this.email != "" && this.password != "") {
+      alert(process.env.VUE_APP_SERVER_API);
+      if (this.input.email != "" && this.input.password != "") {
         var payload = {
-          email: this.email,
-          password: this.password
+          email: this.input.email,
+          password: this.input.password
         };
-        await this.$store.dispatch("login", payload);
+        await this.$store
+          .dispatch("login", payload)
+          .then(() => this.$router.push("/"))
+          .ctahc(err => console.log(err));
       } else {
         alert("An email and password must be present");
         console.log("An email and password must be present");
