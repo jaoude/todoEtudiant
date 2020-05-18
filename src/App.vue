@@ -1,21 +1,28 @@
 <template>
   <v-app>
-      <Navbar/>
-  <router-view>
-  </router-view>
-</v-app>
+    <Navbar />
+    <router-view></router-view>
+  </v-app>
 </template>
 
 <script>
-import Navbar from '@/components/Navbar'
+import Navbar from "@/components/Navbar";
 
 export default {
-  name: 'App',
-  components:{ Navbar},
+  name: "App",
+  components: { Navbar },
   data() {
-    return {
-
-    };
+    return {};
   },
+  created: function() {
+    this.$http.interceptors.response.use(undefined, function(err) {
+      return new Promise(function() {
+        if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
+          this.$store.dispatch("logout");
+        }
+        throw err;
+      });
+    });
+  }
 };
 </script>

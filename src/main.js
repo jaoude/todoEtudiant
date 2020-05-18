@@ -21,8 +21,7 @@ library.add(faTwitter);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.prototype.$emailRegex = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/;
 Vue.prototype.$http = Axios;
-Vue.prototype.devAddress =
-  Vue.config.productionTip = false;
+Vue.config.productionTip = false;
 
 const token = localStorage.getItem('token')
 if (token) {

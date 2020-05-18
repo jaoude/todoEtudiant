@@ -18,20 +18,21 @@
         </v-btn>
       </router-link>
       <v-spacer></v-spacer>
-      <router-link v-if="this.$store.state.isAuthenticated" to="/account/signin" tag="button">
+      <span v-show="this.$store.getters.isLoggedIn">{{this.$store.state.userName}}</span>
+      <router-link v-if="!this.$store.getters.isLoggedIn" to="/account/signin" tag="button">
         <v-btn text class="white">
           <span class="text-none">Sign In</span>
           <v-icon>exit_to_app</v-icon>
         </v-btn>
       </router-link>
-      <router-link v-if="this.$store.state.isAuthenticated" to="/account/signup" tag="button">
+      <router-link v-if="!this.$store.getters.isLoggedIn" to="/account/signup" tag="button">
         <v-btn text class="white">
           <span class="text-none">Sign Up</span>
           <v-icon>add</v-icon>
         </v-btn>
       </router-link>
-      <router-link v-if="!this.$store.state.isAuthenticated" to="/account/signout" tag="button">
-        <v-btn text class="white">
+      <router-link v-if="this.$store.getters.isLoggedIn" to="/home" tag="button">
+        <v-btn text class="white" @click="logout">
           <span class="text-none">Sign Out</span>
           <v-icon>power_settings_new</v-icon>
         </v-btn>
@@ -40,7 +41,6 @@
       <v-btn icon href="https://www.facebook.com/usj.edu.lb/videos/890474227787534/">
         <font-awesome-icon :icon="{ prefix: 'fab', iconName: 'facebook' }" />
       </v-btn>
-
       <v-btn icon href="https://twitter.com/usjliban?lang=en">
         <font-awesome-icon :icon="{ prefix: 'fab', iconName: 'twitter' }" />
       </v-btn>
@@ -49,5 +49,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    logout() {
+      this.$store.dispatch("logout").then(() => {
+        this.$router.push("/home");
+      });
+    }
+  }
+};
 </script> 

@@ -1,11 +1,10 @@
 <template>
-  <v-form id="login" class="transform: scale(0.875)">
+  <v-form id="signup" class="transform: scale(0.875)">
     <v-container>
       <v-row>
         <v-col>
           <v-text-field
             outlined
-            :rules="isEmailValid()"
             class="blue--text"
             prepend-icon="email"
             label="Email"
@@ -57,12 +56,9 @@ export default {
   name: "Register",
   data() {
     return {
-      input: {
-        email: "",
-        password: "",
-        confirmPassword: ""
-      },
-      passwordType: "password"
+      email: "",
+      password: "",
+      confirmPassword: ""
     };
   },
   methods: {
@@ -70,22 +66,16 @@ export default {
       this.passwordType =
         this.passwordType === "password" ? "text" : "password";
     },
-    isEmailValid: function() {
-      return this.email == ""
-        ? [true]
-        : this.$emailRegex.test(this.email)
-        ? [true]
-        : ["Invalid Email"];
-    },
     register() {
-      if (this.email != "" && this.confirmEmail != "" && this.password != "") {
-        if (!(this.email === this.confirmEmail)) {
-          alert("Password and confirm password should match");
-        }
-      } else {
-        alert("A email and password must be present");
-        console.log("A email and password must be present");
-      }
+      let payload = {
+        email: this.email,
+        password: this.password,
+        confirmPassword: this.confirmPassword
+      };
+      this.$store
+        .dispatch("register", payload)
+        .then(() => this.$router.push("/"))
+        .catch(err => console.log(err));
     }
   }
 };
