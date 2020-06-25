@@ -56,5 +56,17 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "description": "```\r npm install\r ```",
+  "main": ".eslintrc.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaoude/todoEtudiant.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaoude/todoEtudiant/issues"
+  },
+  "homepage": "https://github.com/jaoude/todoEtudiant#readme"
 }
